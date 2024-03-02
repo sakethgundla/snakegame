@@ -245,15 +245,37 @@
           pauseResumeButton.textContent = "Pause";
         }
       }
-      function togglePause() {
-  if (!isPaused) {
-    clearInterval(gameLoop);
-    isPaused = true;
-    pauseResumeButton.textContent = "Resume";
-  } else {
-    // ... code to resume the game ...
+      document.addEventListener("DOMContentLoaded", () => {
+  // ... existing game code ...
+
+  function handleKeyDown(event) {
+    switch (event.key) {
+      // ... existing keydown handling for arrow keys ...
+      case "Escape":
+        togglePause();
+        break;
+      default:
+        break;
+    }
   }
-}
+
+  function togglePause() {
+    if (!isPaused) {
+      clearInterval(gameLoop);
+      isPaused = true;
+      pauseResumeButton.textContent = "Resume";
+    } else {
+      gameLoop = setInterval(() => {
+        update();
+        draw();
+      }, 1000 / snake.speed);
+      isPaused = false;
+      pauseResumeButton.textContent = "Pause";
+    }
+  }
+
+  // ... remaining game code ...
+});
 
 
       // Initialize game
